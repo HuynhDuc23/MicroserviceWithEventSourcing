@@ -11,6 +11,7 @@ import vn.com.haibazo.BookService.command.command.CreateBookCommand;
 import vn.com.haibazo.BookService.command.command.DeleteBookCommand;
 import vn.com.haibazo.BookService.command.command.UpdateBookCommand;
 import vn.com.haibazo.BookService.command.model.BookRequestModel;
+import vn.com.haibazo.Commonservice.services.KafkaService;
 
 import java.util.UUID;
 
@@ -20,6 +21,11 @@ import java.util.UUID;
 public class BookCommandController {
     @Autowired
     private CommandGateway commandGateway ;
+
+    @Autowired
+    private KafkaService kafkaService ;
+
+
     @PostMapping
     @Operation(
             summary = "Add Book",
@@ -49,5 +55,10 @@ public class BookCommandController {
         DeleteBookCommand command = new DeleteBookCommand(bookId);
         // phat ra command
         return commandGateway.sendAndWait(command);
+    }
+
+    @PostMapping("/sendMessage")
+    public void sendMessage(@RequestBody String message){
+         kafkaService.sendMessage("test",message);
     }
 }
