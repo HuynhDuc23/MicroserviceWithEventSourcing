@@ -17,7 +17,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/books")
-@Tag(name="Command Gateway")
+@Tag(name="Command Gateway And Config Kafka")
 public class BookCommandController {
     @Autowired
     private CommandGateway commandGateway ;
@@ -60,5 +60,14 @@ public class BookCommandController {
     @PostMapping("/sendMessage")
     public void sendMessage(@RequestBody String message){
          kafkaService.sendMessage("test",message);
+    }
+    @PostMapping("/create")
+    @Operation(
+            summary = "Create Book",
+            description = "This api will created Book"
+    )
+    public void createBook(@RequestBody BookRequestModel model) {
+        kafkaService.sendOrder("create",model);
+
     }
 }

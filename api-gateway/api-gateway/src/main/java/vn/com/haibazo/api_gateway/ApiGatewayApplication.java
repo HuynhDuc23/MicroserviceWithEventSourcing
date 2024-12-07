@@ -15,8 +15,6 @@ public class ApiGatewayApplication {
 		SpringApplication.run(ApiGatewayApplication.class, args);
 	}
 
-
-
 	// chỗ này có tác dụng để phân biệt giữa 2 user khi đến web -> sử dụng tên host , phân biệt người dùng
 	@Bean
 	public KeyResolver customKeyResolver() {
