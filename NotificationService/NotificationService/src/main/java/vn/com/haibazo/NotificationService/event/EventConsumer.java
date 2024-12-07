@@ -57,4 +57,5 @@ public class EventConsumer {
         this.emailService.sendEmail(message,"Wellcome","Wellcome haibazo" ,true,null);
         System.out.println("Received message "+message);
     }
+
 }

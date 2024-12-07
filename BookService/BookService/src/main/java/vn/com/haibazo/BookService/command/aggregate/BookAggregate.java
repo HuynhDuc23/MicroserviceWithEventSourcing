@@ -32,6 +32,12 @@ public class BookAggregate {
         BeanUtils.copyProperties(command,bookCreatedEvent);
         AggregateLifecycle.apply(bookCreatedEvent);
     }
+
+
+    /**
+     * this is method return void
+     * @param command this is the command
+     */
     @CommandHandler
     public void handle(UpdateBookCommand command){
         BookUpdatedEvent bookUpdatedEvent = new BookUpdatedEvent();
