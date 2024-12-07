@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.common.errors.RetriableException;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.DltHandler;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.annotation.RetryableTopic;
@@ -11,11 +12,14 @@ import org.springframework.kafka.retrytopic.DltStrategy;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.stereotype.Component;
+import vn.com.haibazo.Commonservice.services.EmailService;
 import vn.com.haibazo.NotificationService.model.MessageCommandRequest;
 
 @Component
 @Slf4j
 public class EventConsumer {
+    @Autowired
+    private EmailService emailService ;
 
     @RetryableTopic(
             attempts = "2", // so lan retry 3 lan + 1 lan DLQ
@@ -38,10 +42,19 @@ public class EventConsumer {
         String convertedToString = String.valueOf(messageCommandRequest);
         System.out.println(convertedToString.toUpperCase());
         // throw new RuntimeException("Received message: " + "error");
+
+        // send mail
+
     }
     // sau khi da dua vao dltQUeue thi se xu ly cai gi ?
     @DltHandler
     public void processDltMessage(@Payload String message){
         System.out.println("Dead letter queue receive message");
+    }
+
+    @KafkaListener(topics = "test-email" , containerFactory = "kafkaListenerContainerFactory")
+    public void sendMain(String message){
+        this.emailService.sendEmail(message,"Wellcome","Wellcome haibazo" ,true,null);
+        System.out.println("Received message "+message);
     }
 }

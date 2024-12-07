@@ -17,8 +17,4 @@ public class KafkaService {
         kafkaTemplate.send(topic, message);
         log.info("Message sent to topic: {} with value: {}", topic, message);
     }
-//    public void sendOrder(String topic, Object create){
-//        kafkaTemplate.send(topic,create);
-//        log.info("Message sent to topic: {} with value: {}", topic, create);
-//    }
 }
