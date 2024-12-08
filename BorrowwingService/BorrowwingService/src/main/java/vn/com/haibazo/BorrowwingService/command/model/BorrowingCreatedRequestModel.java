@@ -10,7 +10,22 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BorrowingCreatedRequestModel {
-    private String bookId ;
-    private String employeeId ;
-    private Date borrowingDate ;
+    private String bookId;
+    private String employeeId;
+
+    public String getBookId() {
+        return bookId;
+    }
+
+    public void setBookId(String bookId) {
+        this.bookId = bookId;
+    }
+
+    public String getEmployeeId() {
+        return employeeId;
+    }
+
+    public void setEmployeeId(String employeeId) {
+        this.employeeId = employeeId;
+    }
 }

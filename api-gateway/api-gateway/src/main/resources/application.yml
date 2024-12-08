@@ -21,7 +21,7 @@ spring:
               args:
                 redis-rate-limiter.replenishRate: 10
                 redis-rate-limiter.burstCapacity: 100
-                redis-rate-limiter.requestedTokens:
+                redis-rate-limiter.requestedTokens: 1
 #           - KeyAuthFilter
 eureka:
   instance:
