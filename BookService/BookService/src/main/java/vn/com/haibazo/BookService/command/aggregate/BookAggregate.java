@@ -15,6 +15,8 @@ import vn.com.haibazo.BookService.command.command.UpdateBookCommand;
 import vn.com.haibazo.BookService.command.event.BookCreatedEvent;
 import vn.com.haibazo.BookService.command.event.BookDeletedEvent;
 import vn.com.haibazo.BookService.command.event.BookUpdatedEvent;
+import vn.com.haibazo.Commonservice.command.UpdateStatusBookCommand;
+import vn.com.haibazo.Commonservice.event.UpdateStatusBookEvent;
 
 @Aggregate
 @Getter
@@ -71,6 +73,18 @@ public class BookAggregate {
     public void on(BookDeletedEvent event){
         // cap nhat trang thai khi da event
         this.id = event.getId();
+    }
+
+    @CommandHandler
+    public void handle(UpdateStatusBookCommand command){
+        UpdateStatusBookEvent event = new UpdateStatusBookEvent();
+        BeanUtils.copyProperties(command,event);
+        AggregateLifecycle.apply(event);
+    }
+    @EventSourcingHandler
+    public void on(UpdateStatusBookEvent event){
+        this.id = event.getBookId(); // cap nhat id
+        this.isReady = event.getIsReady(); // cap nhat trang thai sach theo command
     }
 
 }

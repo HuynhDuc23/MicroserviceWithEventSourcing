@@ -7,20 +7,21 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="DiscoveryServer" />
         <module name="BookService" />
         <module name="api-gateway" />
-        <module name="NotificationService" />
+        <module name="DiscoveryServer" />
         <module name="Commonservice" />
         <module name="EmployeeService" />
       </profile>
-      <profile name="Annotation profile for BorrowwingService" enabled="true">
+      <profile name="Annotation profile for NotificationService" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/unknown/lombok-unknown.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/unknown/lombok-unknown.jar" />
         </processorPath>
+        <module name="NotificationService" />
         <module name="BorrowwingService" />
       </profile>
     </annotationProcessing>

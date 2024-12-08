@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import vn.com.haibazo.BookService.command.data.Book;
 import vn.com.haibazo.BookService.command.data.BookRepository;
+import vn.com.haibazo.Commonservice.event.UpdateStatusBookEvent;
 
 import java.util.Optional;
 
@@ -29,6 +30,14 @@ public class BookEventsHandler {
             book.setId(event.getId());
             book.setName(event.getName());
             bookRepository.save(book);
+        }
+    }
+    @EventHandler
+    public void on(UpdateStatusBookEvent event){
+        Optional<Book> oldBook = this.bookRepository.findById(event.getBookId());
+        if(oldBook.isPresent()){
+            oldBook.get().setId(event.getBookId());
+            oldBook.get().setIsReady(event.getIsReady());
         }
     }
     @EventHandler
