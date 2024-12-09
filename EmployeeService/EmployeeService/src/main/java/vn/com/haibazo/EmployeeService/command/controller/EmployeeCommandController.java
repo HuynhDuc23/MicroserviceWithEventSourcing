@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import vn.com.haibazo.EmployeeService.command.command.CreateEmployeeCommand;
 import vn.com.haibazo.EmployeeService.command.command.DeleteEmployeeCommand;
+import vn.com.haibazo.EmployeeService.command.command.UpdateEmployeeCommand;
 import vn.com.haibazo.EmployeeService.command.model.CreateEmployeeModel;
+import vn.com.haibazo.EmployeeService.command.model.UpdateEmployeeModel;
 
 import java.util.UUID;
 
@@ -39,12 +41,13 @@ public class EmployeeCommandController {
             description = "Update an existing employee with given details"
     )
     @PutMapping("/{employeeId}")
-    public String updateEmployee(@PathVariable String employeeId, @RequestBody CreateEmployeeModel model){
-        CreateEmployeeCommand command = new CreateEmployeeCommand();
+    public String updateEmployee(@PathVariable String employeeId, @RequestBody UpdateEmployeeModel model){
+        UpdateEmployeeCommand command = new UpdateEmployeeCommand();
         command.setId(employeeId);
         command.setFirstName(model.getFirstName());
         command.setLastName(model.getLastName());
         command.setKin(model.getKin());
+        command.setIsDisciplined(model.getIsDisciplined());
         return commandGateway.sendAndWait(command);
     }
     @DeleteMapping("/{employeeID}")

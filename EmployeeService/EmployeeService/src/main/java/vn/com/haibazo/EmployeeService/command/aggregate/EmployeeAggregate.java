@@ -1,5 +1,7 @@
 package vn.com.haibazo.EmployeeService.command.aggregate;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
@@ -16,6 +18,8 @@ import vn.com.haibazo.EmployeeService.command.event.EmployeeUpdatedEvent;
 
 @Aggregate
 @NoArgsConstructor
+@AllArgsConstructor
+@Data
 public class EmployeeAggregate {
     @AggregateIdentifier
     private String id ;
@@ -47,7 +51,7 @@ public class EmployeeAggregate {
 
 
     @EventSourcingHandler
-    public void on (EmployeeCreatedEvent event){
+    public  void on (EmployeeCreatedEvent event){
         // tại đây ập nhật lại trạng thái của aggregate , và lưu event vào trong event store
         this.id = event.getId();
         this.firstName = event.getFirstName();
