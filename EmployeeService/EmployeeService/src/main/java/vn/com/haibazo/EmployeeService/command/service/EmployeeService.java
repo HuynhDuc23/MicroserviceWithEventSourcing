@@ -1,5 +1,6 @@
 package vn.com.haibazo.EmployeeService.command.service;
 
+import io.swagger.v3.oas.annotations.Operation;
 import org.axonframework.eventhandling.TrackingEventProcessor;
 import org.axonframework.eventhandling.TrackingEventStream;
 import org.axonframework.eventsourcing.eventstore.DomainEventStream;
@@ -16,6 +17,10 @@ public class EmployeeService {
     @Autowired
     private EventStore eventStore ;
 
+    @Operation(
+            summary = "Create a new Employee with restore operations",
+            description = "Create a new Employee with restore operations"
+    )
     public EmployeeAggregate restoreProductToCreationState(String id){
         // Đọc tất cả các sự kiện từ EventStore voi Id truyen vao
         DomainEventStream eventStream = eventStore.readEvents(id);
@@ -24,7 +29,6 @@ public class EmployeeService {
         var eventsToReapply = eventStream.asStream()
                 .filter(event -> event.getPayload() instanceof EmployeeCreatedEvent)
                 .toList();
-
         // Tạo một đối tượng aggregate mới
         EmployeeAggregate aggregate = new EmployeeAggregate();
 

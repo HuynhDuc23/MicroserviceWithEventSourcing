@@ -1,12 +1,9 @@
 package vn.com.haibazo.EmployeeService.config;
-
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Contact;
 import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.info.License;
 import io.swagger.v3.oas.annotations.servers.Server;
-import org.springframework.stereotype.Service;
-
 @OpenAPIDefinition(
         info = @Info(
                 title = "Employee Service API With Microservice EventSourcing",
