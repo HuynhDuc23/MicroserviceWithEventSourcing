@@ -1,5 +1,4 @@
 package vn.com.haibazo.BorrowwingService.command.saga;
-
 import lombok.extern.slf4j.Slf4j;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.messaging.responsetypes.ResponseTypes;
@@ -23,19 +22,17 @@ public class BorrowingSaga {
     private transient CommandGateway commandGateway ;
     @Autowired
     private transient QueryGateway queryGateway ;
-
     @StartSaga // bat dau hanh trinh voi su kien + saga
-    @SagaEventHandler(associationProperty = "id") // lien ket id nay voi id trong borrowingCratedEvent la duy nhat
+    @SagaEventHandler(associationProperty = "id") // lien ket id nay voi id trong borrowingCreatedEvent la duy nhat
     private void handle(BorrowingCreatedEvent event){
         System.out.println("Start saga" +  event.getId() + "employment" + event.getEmployeeId());
         try {
             GetBookDetailQuery getBookDetailQuery = new GetBookDetailQuery(event.getBookId());
             BookResponseCommonModel bookResponseCommonModel = queryGateway.query(getBookDetailQuery, ResponseTypes.instanceOf(BookResponseCommonModel.class)).join();
-
             if(!bookResponseCommonModel.getIsReady()){
                 throw new Exception("BookResponseCommonModel is not ready");
             }else {
-                // san san cho muon
+                // san sang cho muon sach
                 SagaLifecycle.associateWith("bookId", event.getBookId());
                 UpdateStatusBookCommand command = new UpdateStatusBookCommand();
                 command.setBookId(event.getBookId());
@@ -50,7 +47,6 @@ public class BorrowingSaga {
             System.out.println(e.getMessage());
         }
     }
-
     private void rollbackBorrowingRecord(String id) {
         DeleteBorrowingCommand command = new DeleteBorrowingCommand() ;
         command.setId(id);
